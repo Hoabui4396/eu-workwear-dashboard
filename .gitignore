@@ -1,0 +1,7 @@
+# Private archive — do not publish to GitHub Pages
+_superseded/
+
+# Windows / OneDrive junk
+desktop.ini
+Thumbs.db
+.DS_Store

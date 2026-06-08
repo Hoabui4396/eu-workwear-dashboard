@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<script type="application/json" id="cowork-artifact-meta">
+{
+  "name": "Eu Workwear Dashboard",
+  "schemaVersion": 1,
+  "description": "EU workwear market intelligence dashboard for CMC Ningbo. Six categories (M&A, compliance, fabric/Asian volume, trade shows + financials, design/ergonomics, new launches) with CMC sourcing-lens commentary and CMC Action Flags. Snapshot regenerated every Monday morning by a scheduled task; manual refresh button triggers the same task on demand.",
+  "mcpTools": [],
+  "mcpServerNames": []
+}
+</script>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Buikaelements Weekly · EU Workwear Intelligence</title>
+<style>
+  :root {
+    color-scheme: light;
+    --bg: #f4f1ea;
+    --paper: #ffffff;
+    --ink: #15181c;
+    --soft-ink: #3c424b;
+    --muted: #6b7280;
+    --rule: #d8d4c8;
+    --rule-strong: #1a1d22;
+    --accent: #b03a2e;
+    --accent-soft: #fbece8;
+    --flag-bg: #fff4e0;
+    --flag-ink: #92400e;
+    --flag-line: #d97706;
+    --pull: #4a342a;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.55;
+    font-size: 15px;
+  }
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 16px 28px 60px; }
+
+  .masthead { border-top: 4px double var(--rule-strong); border-bottom: 1px solid var(--rule-strong); padding: 18px 0 14px; text-align: center; }
+  .masthead .kicker { font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+  .masthead h1 { font-family: "Georgia", "Times New Roman", serif; font-size: 54px; font-weight: 900; letter-spacing: -0.02em; margin: 0; line-height: 1; color: var(--ink); }
+  .masthead .tagline { margin-top: 6px; font-style: italic; font-family: "Georgia", serif; color: var(--soft-ink); font-size: 14px; }
+  .masthead-bar { display: flex; justify-content: space-between; align-items: center; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); padding: 8px 0; border-top: 1px solid var(--rule); border-bottom: 2px solid var(--rule-strong); margin-bottom: 18px; flex-wrap: wrap; gap: 8px; }
+  .masthead-bar .actions { display: flex; gap: 8px; align-items: center; }
+  .masthead-bar .dot { width: 7px; height: 7px; border-radius: 50%; background: #2e8b57; display: inline-block; margin-right: 4px; }
+  .masthead-bar .dot.busy { background: #c0712d; animation: pulse 1.2s ease-in-out infinite; }
+  @keyframes pulse { 0%,100% { opacity: 0.4; } 50% { opacity: 1; } }
+
+  button.btn { border: 1px solid var(--rule-strong); background: var(--paper); color: var(--ink); padding: 5px 11px; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; font-family: inherit; }
+  button.btn:hover { background: var(--ink); color: var(--paper); }
+  button.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .alerts { background: var(--flag-bg); border: 1px solid var(--flag-line); padding: 12px 16px; margin-bottom: 22px; display: flex; gap: 12px; align-items: flex-start; flex-wrap: wrap; }
+  .alerts .alerts-label { font-size: 10px; letter-spacing: 0.22em; font-weight: 700; color: var(--flag-ink); text-transform: uppercase; border-right: 1px solid var(--flag-line); padding-right: 12px; align-self: stretch; display: flex; align-items: center; }
+  .alerts ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 4px; flex: 1; }
+  .alerts li { color: var(--flag-ink); font-size: 13px; }
+  .alerts li strong { color: var(--flag-ink); }
+
+  .lead { display: grid; grid-template-columns: 1.1fr 1fr; gap: 28px; padding: 0 0 24px; border-bottom: 2px solid var(--rule-strong); margin-bottom: 28px; align-items: start; }
+  @media (max-width: 800px) { .lead { grid-template-columns: 1fr; } }
+  .lead .hero { display: block; width: 100%; height: 280px; border: 1px solid var(--rule); background: var(--paper); }
+  .lead .caption { font-size: 11px; color: var(--muted); margin-top: 4px; font-style: italic; }
+  .lead .section-kicker { font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; font-weight: 700; }
+  .lead h2 { font-family: "Georgia", serif; font-size: 32px; line-height: 1.1; letter-spacing: -0.01em; margin: 0 0 12px; color: var(--ink); }
+  .lead .deck { font-family: "Georgia", serif; font-size: 17px; line-height: 1.5; color: var(--pull); margin: 0 0 14px; font-style: italic; }
+  .lead .byline { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
+  .lead .body p { margin: 0 0 10px; font-size: 15px; color: var(--soft-ink); }
+
+  .section { margin-bottom: 36px; padding-bottom: 28px; border-bottom: 1px solid var(--rule); }
+  .section:last-child { border-bottom: none; }
+  .section-head { display: flex; align-items: baseline; justify-content: space-between; border-bottom: 2px solid var(--rule-strong); padding-bottom: 6px; margin-bottom: 16px; gap: 8px; flex-wrap: wrap; }
+  .section-head h3 { font-family: "Georgia", serif; font-size: 26px; margin: 0; letter-spacing: -0.01em; color: var(--ink); }
+  .section-head .sub { font-size: 11px; color: var(--muted); letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600; }
+
+  .lede { font-family: "Georgia", serif; font-size: 16px; font-style: italic; color: var(--pull); line-height: 1.55; margin: 0 0 14px; border-left: 3px solid var(--accent); padding-left: 14px; }
+  .flag-callout { background: var(--flag-bg); border-left: 4px solid var(--flag-line); color: var(--flag-ink); padding: 10px 14px; margin: 0 0 18px; font-size: 13px; font-weight: 600; }
+  .flag-callout .flag-tag { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; margin-right: 8px; background: var(--flag-line); color: #fff; padding: 2px 6px; border-radius: 3px; font-weight: 700; }
+
+  .stories { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+  .story { background: var(--paper); border: 1px solid var(--rule); text-decoration: none; color: var(--ink); display: flex; flex-direction: column; overflow: hidden; transition: transform 0.15s, box-shadow 0.15s; }
+  .story:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.07); }
+  .story .photo { display: block; width: 100%; height: 150px; }
+  .story .body { padding: 12px 14px 14px; flex: 1; display: flex; flex-direction: column; }
+  .story .source { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; font-weight: 700; }
+  .story .headline { font-family: "Georgia", serif; font-size: 16px; line-height: 1.25; color: var(--ink); margin: 0; letter-spacing: -0.005em; }
+  .story .read-more { margin-top: auto; padding-top: 10px; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+
+  .filters { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 24px; padding-bottom: 10px; border-bottom: 1px dashed var(--rule); align-items: center; }
+  .filters .label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-right: 6px; }
+  .chip { border: 1px solid var(--rule-strong); background: var(--paper); padding: 4px 10px; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; user-select: none; color: var(--ink); font-weight: 600; }
+  .chip.active { background: var(--ink); color: var(--paper); }
+
+  footer.foot { margin-top: 30px; padding-top: 16px; border-top: 2px solid var(--rule-strong); font-size: 11px; color: var(--muted); line-height: 1.5; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+  #toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--ink); color: var(--paper); padding: 10px 16px; border-radius: 4px; font-size: 13px; opacity: 0; transition: opacity 0.3s; pointer-events: none; max-width: 80%; text-align: center; }
+  #toast.show { opacity: 1; }
+</style>
+</head>
+<body>
+
+<!-- ============================================================ -->
+<!-- 30 unique editorial illustrations, one per story              -->
+<!-- ============================================================ -->
+<svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true" focusable="false">
+<defs>
+
+<!-- =================== M&A (mna-1..5) =================== -->
+<symbol id="mna-1" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">
+  <rect width="400" height="240" fill="#142a3d"/>
+  <!-- Sioen building -->
+  <rect x="80" y="60" width="240" height="150" fill="#e8c685"/>
+  <rect x="80" y="60" width="240" height="22" fill="#cf6f43"/>
+  <text x="200" y="76" text-anchor="middle" font-family="Georgia,serif" font-size="14" font-weight="700" fill="#142a3d">SIOEN</text>
+  <g fill="#142a3d">
+    <rect x="100" y="100" width="30" height="30"/><rect x="145" y="100" width="30" height="30"/>
+    <rect x="190" y="100" width="30" height="30"/><rect x="235" y="100" width="30" height="30"/>
+    <rect x="280" y="100" width="30" height="30"/>
+    <rect x="100" y="145" width="30" height="30"/><rect x="145" y="145" width="30" height="30"/>
+    <rect x="190" y="145" width="30" height="30"/><rect x="235" y="145" width="30" height="30"/>
+    <rect x="280" y="145" width="30" height="30"/>
+  </g>
+  <!-- Belgian flag slice -->
+  <rect x="320" y="60" width="20" height="50" fill="#ed1c24"/>
+  <rect x="300" y="60" width="20" height="50" fill="#fae042"/>
+  <rect x="280" y="60" width="20" height="50" fill="#000"/>
+</symbol>
+
+<symbol id="mna-2" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">
+  <rect width="400" height="240" fill="#142a3d"/>
+  <!-- Chart bars under magnifier -->
+  <g fill="#e8c685">
+    <rect x="80" y="160" width="30" height="50"/>
+    <rect x="120" y="130" width="30" height="80"/>
+    <rect x="160" y="100" width="30" height="110"/>
+    <rect x="200" y="80" width="30" height="130"/>
+    <rect x="240" y="60" width="30" height="150"/>
+  </g>
+  <line x1="70" y1="210" x2="290" y2="210" stroke="#f9efd8" stroke-width="2"/>
+  <!-- Magnifier -->
+  <circle cx="260" cy="100" r="42" fill="none" stroke="#cf6f43" stroke-width="8"/>
+  <line x1="292" y1="132" x2="330" y2="170" stroke="#cf6f43" stroke-width="10" stroke-linecap="round"/>
+  <text x="20" y="225" font-family="Georgia,serif" font-size="12" fill="#f9efd8" opacity="0.55" font-style="italic">Valuation · Investors</text>
+</symbol>
+
+<symbol id="mna-3" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">
+  <rect width="400" height="240" fill="#142a3d"/>
+  <!-- Glove with circuit lines -->
+  <path d="M120 200 L120 110 Q120 90 140 90 L150 90 L150 70 Q150 60 160 60 Q170 60 170 70 L170 90 L185 90 Q195 90 195 100 L195 80 Q195 70 205 70 Q215 70 215 80 L215 100 L230 100 Q240 100 240 110 L240 200 Z" fill="#cf6f43"/>
+  <g stroke="#f9efd8" stroke-width="1.5" fill="none" opacity="0.7">
+    <path d="M260 100 L300 100 L300 130 L340 130"/>
+    <path d="M270 150 L310 150 L310 180 L360 180"/>
+    <circle cx="300" cy="100" r="4" fill="#e8c685"/>
+    <circle cx="340" cy="130" r="4" fill="#e8c685"/>
+    <circle cx="310" cy="150" r="4" fill="#e8c685"/>
+    <circle cx="360" cy="180" r="4" fill="#e8c685"/>
+  </g>
+  <text x="270" y="220" font-family="Georgia,serif" font-size="11" fill="#f9efd8" opacity="0.55" font-style="italic">Tech-PPE</text>
+</symbol>
+
+<symbol id="mna-4" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">
+  <rect width="400" height="240" fill="#142a3d"/>
+  <!-- Stylized Europe outline -->
+  <path d="M100 80 Q130 60 170 70 L200 90 L240 80 L280 100 L300 90 L320 120 L300 150 L260 170 L220 180 L180 175 L150 180 L120 170 L100 150 Z"
+        fill="#e8c685" stroke="#cf6f43" stroke-width="2"/>
+  <!-- Upward arrow -->
+  <path d="M180 200 L260 130 L240 130 L240 100 L280 100 L280 130 L260 130" fill="#cf6f43"/>
+  <text x="20" y="225" font-family="Georgia,serif" font-size="12" fill="#f9efd8" opacity="0.55" font-style="italic">Deal momentum · Europe</text>
+</symbol>
+
+<symbol id="mna-5" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">
+  <rect width="400" height="240" fill="#142a3d"/>
+  <!-- Dial gauge -->
+  <path d="M80 180 A130 130 0 0 1 320 180" fill="none" stroke="#e8c685" stroke-width="20"/>
+  <path d="M80 180 A130 130 0 0 1 220 60" fill="none" stroke="#cf6f43" stroke-width="20"/>
+  <circle cx="200" cy="180" r="12" fill="#f9efd8"/>
+  <line x1="200" y1="180" x2="250" y2="100" stroke="#f9efd8" stroke-width="5" stroke-linecap="round"/>
+  <text x="200" y="220" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#f9efd8" opacity="0.55" font-style="italic">Outlook 2026</text>
+</symbol>
+
+<!-- =================== Compliance (comp-1..5) =================== -->
+<symbol id="comp-1" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">
+  <rect width="400" height="240" fill="#1f4d3a"/>
+  <!-- Timeline -->
+  <line x1="60" y1="120" x2="340" y2="120" stroke="#cde9d4" stroke-width="3"/>
+  <g>
+    <circle cx="90" cy="120" r="12" fill="#5fa177"/><text x="90" y="155" text-anchor="middle" font-size="11" fill="#cde9d4" font-family="Georgia,serif">2025</text>
+    <circle cx="160" cy="120" r="12" fill="#5fa177"/><text x="160" y="155" text-anchor="middle" font-size="11" fill="#cde9d4" font-family="Georgia,serif">2026</text>
+    <circle cx="230" cy="120" r="16" fill="#f5d782" stroke="#d99e3c" stroke-width="3"/><text x="230" y="100" text-anchor="middle" font-size="11" fill="#f5d782" font-family="Georgia,serif" font-weight="700">19 Jul</text><text x="230" y="160" text-anchor="middle" font-size="11" fill="#cde9d4" font-family="Georgia,serif">DPP</text>
+    <circle cx="300" cy="120" r="12" fill="#5fa177"/><text x="300" y="155" text-anchor="middle" font-size="11" fill="#cde9d4" font-family="Georgia,serif">2028</text>
+  </g>
+  <text x="200" y="40" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#cde9d4" font-style="italic">DPP · ESPR timeline</text>
+</symbol>
+
+<symbol id="comp-2" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">
+  <rect width="400" height="240" fill="#1f4d3a"/>
+  <!-- Folded shirt + QR -->
+  <path d="M110 80 L160 70 L180 90 L220 90 L240 70 L290 80 L290 170 L110 170 Z" fill="#cde9d4" stroke="#5fa177" stroke-width="2"/>
+  <path d="M170 90 L180 110 L220 110 L230 90" fill="none" stroke="#5fa177" stroke-width="2"/>
+  <!-- QR-like grid -->
+  <g fill="#1f4d3a">
+    <rect x="190" y="125" width="6" height="6"/><rect x="200" y="125" width="6" height="6"/><rect x="210" y="125" width="6" height="6"/>
+    <rect x="190" y="135" width="6" height="6"/><rect x="210" y="135" width="6" height="6"/>
+    <rect x="190" y="145" width="6" height="6"/><rect x="200" y="145" width="6" height="6"/><rect x="210" y="145" width="6" height="6"/>
+  </g>
+  <text x="200" y="200" text-anchor="middle" font-family="Georgia,serif" font-size="12" fill="#cde9d4" font-style="italic">Textile DPP</text>
+</symbol>
+
+<symbol id="comp-3" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">
+  <rect width="400" height="240" fill="#1f4d3a"/>
+  <!-- EU stars circle -->
+  <circle cx="200" cy="120" r="70" fill="#1a3d8f"/>
+  <g fill="#f5d782">
+    <text x="200" y="65" text-anchor="middle" font-size="14">★</text>
+    <text x="240" y="80" text-anchor="middle" font-size="14">★</text>
+    <text x="265" y="115" text-anchor="middle" font-size="14">★</text>
+    <text x="265" y="150" text-anchor="middle" font-size="14">★</text>
+    <text x="240" y="180" text-anchor="middle" font-size="14">★</text>
+    <text x="200" y="195" text-anchor="middle" font-size="14">★</text>
+    <text x="160" y="180" text-anchor="middle" font-size="14">★</text>
+    <text x="135" y="150" text-anchor="middle" font-size="14">★</text>
+    <text x="135" y="115" text-anchor="middle" font-size="14">★</text>
+    <text x="160" y="80" text-anchor="middle" font-size="14">★</text>
+  </g>
+  <!-- Check -->
+  <path d="M180 122 L195 138 L225 105" fill="none" stroke="#cde9d4" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+</symbol>
+
+<symbol id="comp-4" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">
+  <rect width="400" height="240" fill="#1f4d3a"/>
+  <!-- Clipboard -->
+  <rect x="120" y="40" width="160" height="180" fill="#cde9d4" stroke="#5fa177" stroke-width="3"/>
+  <rect x="170" y="30" width="60" height="22" rx="4" fill="#5fa177"/>
+  <g stroke="#1f4d3a" stroke-width="3" fill="none">
+    <rect x="140" y="80" width="14" height="14"/><line x1="140" y1="87" x2="154" y2="87"/><line x1="140" y1="80" x2="154" y2="94"/>
+    <rect x="140" y="110" width="14" height="14"/><line x1="140" y1="117" x2="154" y2="117"/><line x1="140" y1="110" x2="154" y2="124"/>
+    <rect x="140" y="140" width="14" height="14"/><line x1="140" y1="147" x2="154" y2="147"/>
+    <rect x="140" y="170" width="14" height="14"/>
+  </g>
+  <g stroke="#1f4d3a" stroke-width="3">
+    <line x1="165" y1="87" x2="255" y2="87"/>
+    <line x1="165" y1="117" x2="255" y2="117"/>
+    <line x1="165" y1="147" x2="255" y2="147"/>
+    <line x1="165" y1="177" x2="255" y2="177"/>
+  </g>
+</symbol>
+
+<symbol id="comp-5" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">
+  <rect width="400" height="240" fill="#1f4d3a"/>
+  <!-- No-PFAS symbol -->
+  <circle cx="200" cy="120" r="70" fill="none" stroke="#e95846" stroke-width="9"/>
+  <line x1="155" y1="75" x2="245" y2="165" stroke="#e95846" stroke-width="9" stroke-linecap="round"/>
+  <text x="200" y="128" text-anchor="middle" font-family="Georgia,serif" font-weight="900" font-size="34" fill="#cde9d4">PFAS</text>
+  <text x="200" y="210" text-anchor="middle" font-family="Georgia,serif" font-size="12" fill="#cde9d4" font-style="italic">2026 bans</text>
+</symbol>
+
+<!-- =================== Fabric (fab-1..5) =================== -->
+<symbol id="fab-1" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">
+  <rect width="400" height="240" fill="#4d2f23"/>
+  <!-- Fabric weave bg -->
+  <g stroke="#a8714e" stroke-width="1.5" opacity="0.6">
+    <line x1="0" y1="40" x2="400" y2="40"/><line x1="0" y1="80" x2="400" y2="80"/>
+    <line x1="0" y1="160" x2="400" y2="160"/><line x1="0" y1="200" x2="400" y2="200"/>
+  </g>
+  <!-- Water droplet rolling off -->
+  <ellipse cx="200" cy="120" rx="90" ry="6" fill="#e0b181" opacity="0.6"/>
+  <path d="M200 90 Q220 110 220 125 A20 20 0 1 1 180 125 Q180 110 200 90 Z" fill="#a8d8db" stroke="#5e8cad" stroke-width="2"/>
+  <ellipse cx="195" cy="120" rx="4" ry="6" fill="#cce8ec" opacity="0.8"/>
+  <text x="200" y="200" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#f5e6cf" font-style="italic">Hydrophobic finish</text>
+</symbol>
+
+<symbol id="fab-2" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">
+  <rect width="400" height="240" fill="#4d2f23"/>
+  <!-- Coffee splash -->
+  <g fill="#7c4528">
+    <ellipse cx="160" cy="120" rx="40" ry="20"/>
+    <circle cx="220" cy="105" r="8"/><circle cx="240" cy="120" r="6"/>
+    <circle cx="200" cy="150" r="5"/><circle cx="120" cy="100" r="4"/>
+  </g>
+  <!-- Shield over -->
+  <path d="M260 70 L320 70 L320 130 Q320 165 290 180 Q260 165 260 130 Z" fill="#f5e6cf" stroke="#a8714e" stroke-width="3"/>
+  <path d="M275 115 L290 130 L310 100" fill="none" stroke="#4d2f23" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="200" y="220" text-anchor="middle" font-family="Georgia,serif" font-size="12" fill="#f5e6cf" font-style="italic">Soil &amp; stain release</text>
+</symbol>
+
+<symbol id="fab-3" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">
+  <rect width="400" height="240" fill="#4d2f23"/>
+  <!-- Mountains -->
+  <polygon points="0,210 80,120 140,170 200,80 260,160 320,120 400,210" fill="#a8714e"/>
+  <polygon points="0,210 100,150 160,180 220,120 280,170 360,140 400,210" fill="#7c4528"/>
+  <circle cx="320" cy="60" r="20" fill="#f5e6cf"/>
+  <text x="200" y="225" text-anchor="middle" font-family="Georgia,serif" font-size="12" fill="#f5e6cf" font-style="italic">Outdoor heritage</text>
+</symbol>
+
+<symbol id="fab-4" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">
+  <rect width="400" height="240" fill="#4d2f23"/>
+  <!-- Mannequin silhouette -->
+  <circle cx="200" cy="55" r="22" fill="#e0b181"/>
+  <path d="M160 90 L240 90 L255 140 L235 150 L235 200 L165 200 L165 150 L145 140 Z" fill="#e0b181"/>
+  <line x1="200" y1="80" x2="200" y2="210" stroke="#7c4528" stroke-width="3"/>
+  <!-- Fashion swatches -->
+  <rect x="40" y="60" width="40" height="40" fill="#a8d8db"/>
+  <rect x="40" y="110" width="40" height="40" fill="#f5d782"/>
+  <rect x="320" y="60" width="40" height="40" fill="#e95846"/>
+  <rect x="320" y="110" width="40" height="40" fill="#5fa177"/>
+</symbol>
+
+<symbol id="fab-5" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">
+  <rect width="400" height="240" fill="#4d2f23"/>
+  <!-- Hangers row -->
+  <line x1="40" y1="60" x2="360" y2="60" stroke="#e0b181" stroke-width="2"/>
+  <g fill="#f5e6cf" stroke="#a8714e" stroke-width="2">
+    <path d="M70 60 L70 80 M50 80 L90 80 L80 200 L60 200 Z"/>
+    <path d="M140 60 L140 80 M120 80 L160 80 L150 200 L130 200 Z"/>
+    <path d="M210 60 L210 80 M190 80 L230 80 L220 200 L200 200 Z"/>
+    <path d="M280 60 L280 80 M260 80 L300 80 L290 200 L270 200 Z"/>
+  </g>
+  <text x="200" y="220" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#f5e6cf" font-style="italic">PFAS-free apparel</text>
+</symbol>
+
+<!-- =================== Trade Shows (shows-1..5) =================== -->
+<symbol id="shows-1" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">
+  <rect width="400" height="240" fill="#2c2147"/>
+  <!-- Denim pants -->
+  <path d="M150 60 L250 60 L260 200 L220 200 L210 130 L200 200 L160 200 Z" fill="#5a7fb0" stroke="#cebed8" stroke-width="2"/>
+  <line x1="200" y1="65" x2="200" y2="200" stroke="#3a5a85" stroke-width="2"/>
+  <rect x="175" y="68" width="50" height="10" fill="#9a85b6"/>
+  <!-- $ sign -->
+  <circle cx="320" cy="80" r="28" fill="#f0d883"/>
+  <text x="320" y="95" text-anchor="middle" font-family="Georgia,serif" font-weight="900" font-size="32" fill="#2c2147">$</text>
+</symbol>
+
+<symbol id="shows-2" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">
+  <rect width="400" height="240" fill="#2c2147"/>
+  <!-- Growing bars -->
+  <g fill="#b6a4cf">
+    <rect x="60" y="170" width="40" height="40"/>
+    <rect x="120" y="140" width="40" height="70"/>
+    <rect x="180" y="110" width="40" height="100"/>
+    <rect x="240" y="85" width="40" height="125"/>
+    <rect x="300" y="55" width="40" height="155"/>
+  </g>
+  <line x1="50" y1="210" x2="350" y2="210" stroke="#cebed8" stroke-width="2"/>
+  <!-- Trend arrow -->
+  <path d="M70 175 L320 60" stroke="#f0d883" stroke-width="4" stroke-linecap="round"/>
+  <polygon points="320,60 305,55 310,75" fill="#f0d883"/>
+  <text x="200" y="230" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#cebed8" font-style="italic">Half-year results</text>
+</symbol>
+
+<symbol id="shows-3" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">
+  <rect width="400" height="240" fill="#2c2147"/>
+  <!-- Donut chart -->
+  <circle cx="200" cy="120" r="70" fill="#cebed8"/>
+  <path d="M200 50 A70 70 0 0 1 268 132 L200 120 Z" fill="#f0d883"/>
+  <path d="M268 132 A70 70 0 0 1 175 188 L200 120 Z" fill="#e95846"/>
+  <circle cx="200" cy="120" r="32" fill="#2c2147"/>
+  <text x="200" y="220" text-anchor="middle" font-family="Georgia,serif" font-size="12" fill="#cebed8" font-style="italic">Financial summary</text>
+</symbol>
+
+<symbol id="shows-4" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">
+  <rect width="400" height="240" fill="#2c2147"/>
+  <!-- Exhibition booths with BKK label -->
+  <rect x="40" y="120" width="60" height="90" fill="#b6a4cf"/>
+  <polygon points="40,120 70,95 100,120" fill="#7d65a0"/>
+  <rect x="120" y="100" width="60" height="110" fill="#cebed8"/>
+  <polygon points="120,100 150,75 180,100" fill="#7d65a0"/>
+  <rect x="200" y="110" width="60" height="100" fill="#b6a4cf"/>
+  <polygon points="200,110 230,85 260,110" fill="#7d65a0"/>
+  <rect x="280" y="90" width="80" height="120" fill="#f0d883"/>
+  <polygon points="280,90 320,60 360,90" fill="#cf6f43"/>
+  <text x="320" y="155" text-anchor="middle" font-family="Georgia,serif" font-weight="900" font-size="22" fill="#2c2147">BKK</text>
+  <text x="320" y="180" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#2c2147">3–5 Jun</text>
+</symbol>
+
+<symbol id="shows-5" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">
+  <rect width="400" height="240" fill="#2c2147"/>
+  <!-- Newspaper folded -->
+  <rect x="80" y="50" width="240" height="160" fill="#f5e6cf" stroke="#7d65a0" stroke-width="3" transform="rotate(-3 200 130)"/>
+  <g transform="rotate(-3 200 130)" fill="#2c2147">
+    <text x="100" y="80" font-family="Georgia,serif" font-weight="900" font-size="18">VF NEWS</text>
+    <rect x="100" y="95" width="200" height="3"/>
+    <rect x="100" y="115" width="200" height="3"/>
+    <rect x="100" y="125" width="180" height="3"/>
+    <rect x="100" y="135" width="200" height="3"/>
+    <rect x="100" y="155" width="200" height="3"/>
+    <rect x="100" y="165" width="160" height="3"/>
+    <rect x="100" y="175" width="200" height="3"/>
+  </g>
+</symbol>
+
+<!-- =================== Design (des-1..5) =================== -->
+<symbol id="des-1" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">
+  <rect width="400" height="240" fill="#1d3a4a"/>
+  <!-- Hi-vis vest -->
+  <path d="M140 60 L200 50 L260 60 L280 130 L260 130 L260 210 L140 210 L140 130 L120 130 Z" fill="#f5d782" stroke="#a8732c" stroke-width="2"/>
+  <!-- Reflective stripes -->
+  <rect x="140" y="145" width="120" height="14" fill="#cce8ec" opacity="0.8"/>
+  <rect x="140" y="175" width="120" height="14" fill="#cce8ec" opacity="0.8"/>
+  <line x1="200" y1="60" x2="200" y2="130" stroke="#a8732c" stroke-width="2"/>
+  <text x="320" y="80" font-family="Georgia,serif" font-size="11" fill="#a8d8db" font-style="italic">Smarter</text>
+  <text x="320" y="98" font-family="Georgia,serif" font-size="11" fill="#a8d8db" font-style="italic">fabrics</text>
+</symbol>
+
+<symbol id="des-2" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">
+  <rect width="400" height="240" fill="#1d3a4a"/>
+  <!-- Garment with ribbon -->
+  <line x1="200" y1="60" x2="200" y2="80" stroke="#f5d782" stroke-width="2"/>
+  <path d="M160 80 L240 80 L255 120 L240 130 L240 200 L160 200 L160 130 L145 120 Z" fill="#f5d782" stroke="#a8732c" stroke-width="2"/>
+  <!-- Ribbon -->
+  <path d="M180 80 L180 110 L195 105 L210 110 L210 80" fill="#e95846" stroke="#a8732c" stroke-width="2"/>
+  <text x="200" y="222" text-anchor="middle" font-family="Georgia,serif" font-size="12" fill="#a8d8db" font-style="italic">Best brands 2026</text>
+</symbol>
+
+<symbol id="des-3" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">
+  <rect width="400" height="240" fill="#1d3a4a"/>
+  <!-- Worker silhouette with stretch -->
+  <circle cx="200" cy="55" r="20" fill="#f5d782"/>
+  <path d="M160 80 L240 80 L255 130 L240 140 L255 200 L210 200 L200 150 L190 200 L145 200 L160 140 L145 130 Z" fill="#f5d782" stroke="#a8732c" stroke-width="2"/>
+  <!-- Stretch indicators -->
+  <path d="M160 110 Q150 120 160 130" fill="none" stroke="#e95846" stroke-width="3"/>
+  <path d="M240 110 Q250 120 240 130" fill="none" stroke="#e95846" stroke-width="3"/>
+  <path d="M180 165 Q200 175 220 165" fill="none" stroke="#e95846" stroke-width="3"/>
+  <text x="200" y="225" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#a8d8db" font-style="italic">X-treme · articulation</text>
+</symbol>
+
+<symbol id="des-4" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">
+  <rect width="400" height="240" fill="#1d3a4a"/>
+  <!-- Construction scene: scaffold + workers -->
+  <g stroke="#a8d8db" stroke-width="2" opacity="0.6">
+    <line x1="60" y1="40" x2="60" y2="210"/><line x1="160" y1="40" x2="160" y2="210"/>
+    <line x1="260" y1="40" x2="260" y2="210"/><line x1="340" y1="40" x2="340" y2="210"/>
+    <line x1="40" y1="80" x2="360" y2="80"/><line x1="40" y1="140" x2="360" y2="140"/>
+  </g>
+  <!-- Worker A -->
+  <circle cx="120" cy="100" r="10" fill="#f5d782"/>
+  <rect x="111" y="110" width="18" height="36" fill="#f5d782"/>
+  <!-- Worker B -->
+  <circle cx="200" cy="160" r="10" fill="#f5d782"/>
+  <rect x="191" y="170" width="18" height="36" fill="#f5d782"/>
+  <!-- Worker C -->
+  <circle cx="290" cy="100" r="10" fill="#f5d782"/>
+  <rect x="281" y="110" width="18" height="36" fill="#f5d782"/>
+  <text x="20" y="225" font-family="Georgia,serif" font-size="11" fill="#a8d8db" opacity="0.7" font-style="italic">DASSY workwear</text>
+</symbol>
+
+<symbol id="des-5" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">
+  <rect width="400" height="240" fill="#1d3a4a"/>
+  <!-- Shield with multiple marks -->
+  <path d="M200 50 L290 80 L290 140 Q290 190 200 215 Q110 190 110 140 L110 80 Z" fill="#f5d782" stroke="#a8732c" stroke-width="3"/>
+  <g font-family="Georgia,serif" fill="#1d3a4a" font-weight="700">
+    <text x="200" y="105" text-anchor="middle" font-size="14">EN 20471</text>
+    <text x="200" y="135" text-anchor="middle" font-size="14">EN 343</text>
+    <text x="200" y="165" text-anchor="middle" font-size="14">EN 11611</text>
+    <text x="200" y="195" text-anchor="middle" font-size="14">EN 13034</text>
+  </g>
+</symbol>
+
+<!-- =================== Launches (lau-1..5) =================== -->
+<symbol id="lau-1" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">
+  <rect width="400" height="240" fill="#5c2532"/>
+  <!-- Rain cloud + jacket -->
+  <ellipse cx="120" cy="70" rx="50" ry="22" fill="#cebed8"/>
+  <g stroke="#a8d8db" stroke-width="2">
+    <line x1="90" y1="95" x2="80" y2="115"/><line x1="110" y1="95" x2="100" y2="120"/>
+    <line x1="130" y1="95" x2="120" y2="115"/><line x1="150" y1="95" x2="140" y2="120"/>
+  </g>
+  <!-- Hi-vis jacket -->
+  <path d="M190 90 L240 80 L290 90 L310 160 L290 160 L290 210 L190 210 L190 160 L170 160 Z" fill="#f5d782" stroke="#a8732c" stroke-width="2"/>
+  <rect x="190" y="175" width="100" height="10" fill="#cce8ec"/>
+  <text x="240" y="230" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#edcaa0" font-style="italic">Hi-vis waterproof set</text>
+</symbol>
+
+<symbol id="lau-2" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">
+  <rect width="400" height="240" fill="#5c2532"/>
+  <!-- Umbrella with check -->
+  <path d="M120 110 Q120 60 200 60 Q280 60 280 110 Z" fill="#edcaa0" stroke="#7a3d2e" stroke-width="3"/>
+  <line x1="120" y1="110" x2="280" y2="110" stroke="#7a3d2e" stroke-width="2"/>
+  <line x1="160" y1="60" x2="160" y2="110" stroke="#7a3d2e" stroke-width="1"/>
+  <line x1="200" y1="55" x2="200" y2="110" stroke="#7a3d2e" stroke-width="1"/>
+  <line x1="240" y1="60" x2="240" y2="110" stroke="#7a3d2e" stroke-width="1"/>
+  <line x1="200" y1="110" x2="200" y2="200" stroke="#7a3d2e" stroke-width="3"/>
+  <path d="M200 200 Q220 200 220 180" fill="none" stroke="#7a3d2e" stroke-width="3"/>
+  <!-- check badge -->
+  <circle cx="305" cy="80" r="22" fill="#f5d782"/>
+  <path d="M293 80 L302 90 L320 70" fill="none" stroke="#5c2532" stroke-width="4" stroke-linecap="round"/>
+  <text x="200" y="225" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#edcaa0" font-style="italic">EN 343 guide</text>
+</symbol>
+
+<symbol id="lau-3" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">
+  <rect width="400" height="240" fill="#5c2532"/>
+  <!-- 5 vests in different colors -->
+  <g stroke="#7a3d2e" stroke-width="2">
+    <path d="M40 80 L70 70 L100 80 L105 180 L65 180 L65 130 L75 130 L75 80 L65 80 L65 130 L40 130 Z" fill="#f5d782"/>
+    <path d="M110 80 L140 70 L170 80 L175 180 L135 180 L135 130 L145 130 L145 80 L135 80 L135 130 L110 130 Z" fill="#e95846"/>
+    <path d="M180 80 L210 70 L240 80 L245 180 L205 180 L205 130 L215 130 L215 80 L205 80 L205 130 L180 130 Z" fill="#5fa177"/>
+    <path d="M250 80 L280 70 L310 80 L315 180 L275 180 L275 130 L285 130 L285 80 L275 80 L275 130 L250 130 Z" fill="#5a7fb0"/>
+    <path d="M320 80 L350 70 L380 80 L385 180 L345 180 L345 130 L355 130 L355 80 L345 80 L345 130 L320 130 Z" fill="#b6a4cf"/>
+  </g>
+  <text x="200" y="220" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#edcaa0" font-style="italic">25 colour options</text>
+</symbol>
+
+<symbol id="lau-4" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">
+  <rect width="400" height="240" fill="#5c2532"/>
+  <!-- Garment with NEW tag -->
+  <path d="M150 70 L210 60 L270 70 L290 140 L270 140 L270 210 L150 210 L150 140 L130 140 Z" fill="#edcaa0" stroke="#7a3d2e" stroke-width="2"/>
+  <!-- NEW tag -->
+  <path d="M280 65 L350 50 L355 80 L290 95 Z" fill="#e95846" stroke="#7a3d2e" stroke-width="2"/>
+  <text x="318" y="79" text-anchor="middle" font-family="Georgia,serif" font-weight="900" font-size="16" fill="#fff" transform="rotate(-10 318 79)">NEW</text>
+  <circle cx="288" cy="73" r="3" fill="#7a3d2e"/>
+  <text x="200" y="230" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#edcaa0" font-style="italic">2025/26 collection</text>
+</symbol>
+
+<symbol id="lau-5" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">
+  <rect width="400" height="240" fill="#5c2532"/>
+  <!-- Scrolling feed -->
+  <rect x="80" y="40" width="240" height="170" fill="#edcaa0" stroke="#7a3d2e" stroke-width="3"/>
+  <g fill="#7a3d2e">
+    <rect x="100" y="60" width="40" height="40" rx="4"/>
+    <rect x="150" y="65" width="150" height="6"/>
+    <rect x="150" y="80" width="120" height="6"/>
+    <rect x="150" y="92" width="100" height="6"/>
+    <rect x="100" y="115" width="40" height="40" rx="4"/>
+    <rect x="150" y="120" width="150" height="6"/>
+    <rect x="150" y="135" width="130" height="6"/>
+    <rect x="150" y="147" width="100" height="6"/>
+    <rect x="100" y="170" width="40" height="30" rx="4"/>
+    <rect x="150" y="175" width="150" height="6"/>
+    <rect x="150" y="190" width="120" height="6"/>
+  </g>
+  <text x="200" y="230" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#edcaa0" font-style="italic">New products feed</text>
+</symbol>
+
+</defs>
+</svg>
+
+<div class="wrap">
+
+  <div class="masthead">
+    <div class="kicker">Vol. 1 · Issue <span id="issue-num"></span></div>
+    <h1>BUIKAELEMENTS</h1>
+    <div class="tagline">EU Workwear Intelligence — Weekly Edition</div>
+  </div>
+
+  <div class="masthead-bar">
+    <span id="issue-date">—</span>
+    <span id="snapshot-stamp">—</span>
+    <span class="actions">
+      <span><span class="dot" id="status-dot"></span><span id="status-text">Loaded</span></span>
+      <button class="btn" id="refresh-btn">↻ Refresh</button>
+    </span>
+  </div>
+
+  <div class="alerts" id="alerts" style="display:none">
+    <div class="alerts-label">Action Alerts</div>
+    <ul id="alerts-list"></ul>
+  </div>
+
+  <article class="lead" id="lead"></article>
+
+  <div class="filters">
+    <span class="label">Sections:</span>
+    <span id="filter-chips"></span>
+  </div>
+
+  <main id="sections"></main>
+
+  <footer class="foot">
+    <span>Sources: live web search aggregated for sourcing-intelligence use. Editorial illustrations are per-story illustrations representing topic/brand, not actual article photos. Verify before client-facing distribution.</span>
+    <span id="next-refresh">—</span>
+  </footer>
+</div>
+
+<div id="toast"></div>
+
+<script>
+"use strict";
+
+const SNAPSHOT = {
+  refreshedAt: "2026-05-14T11:00:00+00:00",
+  featured: {
+    sectionId: "compliance",
+    svgId: "comp-5",
+    sectionLabel: "Compliance · The lead story this week",
+    headline: "PPE keeps a time-limited PFAS exemption; outdoor technical textiles do not",
+    deck: "ECHA's revised universal PFAS restriction (March 2026) carves time-limited exemptions for PPE and recycled-content textiles, but explicitly refuses to exempt outdoor technical textiles such as softshell, rainwear and technical jackets.",
+    body: [
+      "ECHA's Committee for Socio-economic Analysis (SEAC) is scheduled to adopt its final opinion on the universal PFAS restriction by end-2026, after which the European Commission will draft the formal restriction. The March 2026 update splits the textile sector into a tiered regime: PPE — explicitly including first-responder and military gear — receives a time-limited exemption; textiles using recycled content qualify for an exemption window of up to 13.5 years; outdoor technical textiles get no exemption, with ECHA citing commercially available PFAS-free alternatives.",
+      "For Asian manufacturers serving EU workwear brands, this creates a structurally favourable runway on certified PPE programs (hi-vis to EN ISO 20471, weather-wear to EN 343, flame protection to EN 11611 / EN ISO 11612, chemical splash to EN 13034) while outdoor-leaning programs need PFAS-free DWR specs locked in for every 2026 RFQ. Mills already qualified on water-based, silicone or PFCZERO finishes hold the commercial advantage; mill qualification — not chemistry — is now the bottleneck."
+    ],
+    sourceLabel: "ECHA · Sourcing Journal · Ecotextile News"
+  },
+  categories: [
+    {
+      id: "mna",
+      title: "Mergers & Ownership",
+      subtitle: "Acquisitions · PE buyouts · Divestitures",
+      lede: "Four workwear-relevant deals have reshaped the ownership map over the past nine months: Bluestar Alliance acquired Dickies from VF Corp for USD 600M (Q3 2025); Kontoor Brands acquired Helly Hansen for USD 900M (Q2 2025) and is now divesting Lee with a USD 750M buyback announced after Q1 2026; Protective Industrial Products (PIP) absorbed Italian PPE supplier Industrial Starter as a European platform; Mechanix Wear added a tech-PPE firm in March 2026. Each new owner runs its own supplier review six-to-twelve months post-close.",
+      flag: "Action Flag: Bluestar-owned Dickies and Kontoor-owned Helly Hansen are entering integration phase — supplier consolidation reviews typically begin mid-2026, the highest-leverage moment for Asian manufacturers to be in front of the new owners.",
+      links: [
+        { title: "Bluestar buys Dickies for $600M — Q3 2025 strategic M&A", url: "https://fashionunited.com/news/business/strategic-mergers-and-acquisitions-in-q3-2025/2025112769391", source: "fashionunited.com", svgId: "mna-1" },
+        { title: "PIP acquires Industrial Starter — European PPE & workwear platform", url: "https://www.healthandsafetyinternational.com/article/1843055/protective-industrial-products-inc-acquires-industrial-starter-leading-european-ppe-workwear-supplier", source: "healthandsafetyinternational.com", svgId: "mna-4" },
+        { title: "Mechanix Wear buys tech-PPE firm (March 2026)", url: "https://www.healthandsafetyinternational.com/article/1952259/industry-brief-international-safety-awards-2026-mechanix-wear-buys-tech-ppe-firm-oeg-launches-employee-stake", source: "healthandsafetyinternational.com", svgId: "mna-3" },
+        { title: "Strategic acquisitions Q2 2025 (Kontoor → Helly Hansen, $900M)", url: "https://fashionunited.com/news/business/strategic-acquisitions-and-expansions-in-apparel-q2-2025/2025082667891", source: "fashionunited.com", svgId: "mna-2" },
+        { title: "2026 Fashion M&A Outlook — Trends, Deals & Strategies", url: "https://wwd.com/business-news/mergers-acquisitions/fashion-ma-2026-trends-strategic-deals-1238434240/", source: "wwd.com", svgId: "mna-5" }
+      ]
+    },
+    {
+      id: "compliance",
+      title: "Certification & Compliance",
+      subtitle: "ESPR · DPP · REACH · EN ISO 20471 · EN 343",
+      lede: "Three EU regulatory deadlines converge on 19 July 2026 (~66 days from today): the ban on destruction of unsold clothes and shoes activates for large companies under ESPR, the Central DPP Registry goes live alongside full ESPR application, and Denmark's national PFAS apparel ban takes effect. Textile-specific ESPR delegated acts are expected late 2025 / early 2026, with mandatory textile compliance still on a 2028 horizon. Euratex's March 2026 DPP Position Paper sets out the apparel industry's compliance asks — clear timelines, recognition of pre-existing data systems, SME-friendly thresholds.",
+      flag: "Action Flag: 19 July 2026 is ~66 days away — any EU-sold workwear program must have a DPP-ready data pack (composition, country-of-finishing, recyclability claims, chemicals dossier) prepared for Q3 RFQs.",
+      links: [
+        { title: "Euratex — The Digital Product Passport for Apparel (Position Paper, March 2026)", url: "https://euratex.eu/wp-content/uploads/Position-Paper-DPP.pdf", source: "euratex.eu", svgId: "comp-2" },
+        { title: "European Commission — New EU rules to stop destruction of unsold clothes and shoes (effective 19 Jul 2026)", url: "https://environment.ec.europa.eu/news/new-eu-rules-stop-destruction-unsold-clothes-and-shoes-2026-02-09_en", source: "ec.europa.eu", svgId: "comp-3" },
+        { title: "European Commission — ESPR 2025–2030 Working Plan (Green Forum)", url: "https://green-forum.ec.europa.eu/news/2025-2030-working-plan-2025-07-11_en", source: "ec.europa.eu", svgId: "comp-1" },
+        { title: "ECHA Update on the universal PFAS restriction process (Aug 2025)", url: "https://echa.europa.eu/documents/10162/111425157/echa_update_pfas_en.pdf", source: "echa.europa.eu", svgId: "comp-5" },
+        { title: "Sourcing Journal — What's the status on DPP implementation?", url: "https://sourcingjournal.com/topics/technology/digital-product-passports-sustainability-regulations-traceability-1234755688/", source: "sourcingjournal.com", svgId: "comp-4" }
+      ]
+    },
+    {
+      id: "fabric",
+      title: "Fabric, Chemistry & Material",
+      subtitle: "PFAS restriction · DWR alternatives · Performance fibres",
+      lede: "ECHA's universal PFAS restriction proposal, updated in March 2026, brackets the textile sector inside TULAC (Textiles, Upholstery, Leather, Apparel, Carpets) — one of 15 sectors in scope. The Committee for Risk Assessment is finalising its opinion; SEAC adopts a final opinion by end-2026. On the supply side, Klopman International and Schoeller-works debuted the Synergo workwear range at Techtextil 2026 — stretch, soft-shell and laminated constructions paired with 3XDRY, Ecorepel, NanoSphere and Coldblack finishes. The chemistry transition is done at the lab level; the commercial question is mill qualification and inventory.",
+      flag: "",
+      links: [
+        { title: "ECHA — Revised PFAS restriction proposal (March 2026 publication)", url: "https://echa.europa.eu/documents/10162/fcf2339b-9296-28be-d0ee-c547fe032a19", source: "echa.europa.eu", svgId: "fab-1" },
+        { title: "Sourcing Journal — ECHA Revises PFAS Proposal: textile implications", url: "https://sourcingjournal.com/sustainability/sustainability-news/european-chemicals-agency-pfas-chemicals-restriction-proposal-1234781344/", source: "sourcingjournal.com", svgId: "fab-2" },
+        { title: "European Commission — REACH Restrictions framework", url: "https://single-market-economy.ec.europa.eu/sectors/chemicals/reach/restrictions_en", source: "ec.europa.eu", svgId: "fab-3" },
+        { title: "European Commission — New study confirms huge and growing costs of PFAS pollution", url: "https://environment.ec.europa.eu/news/new-study-confirms-huge-and-growing-costs-pfas-pollution-2026-01-29_en", source: "ec.europa.eu", svgId: "fab-4" },
+        { title: "Innovation in Textiles — Synergo workwear fabrics debut at Techtextil", url: "https://innovationintextiles.com/clothing-footwear/synergo-workwear-fabrics-debut-at-techtextil/", source: "innovationintextiles.com", svgId: "fab-5" }
+      ]
+    },
+    {
+      id: "shows",
+      title: "Trade Shows & Brand Financials",
+      subtitle: "Techtextil · A+A · CIOSH · Quarterly earnings",
+      lede: "A+A Düsseldorf 2025 closed in November; the next main A+A is October 2027, leaving Techtextil Frankfurt 2026 (functional apparel and PFAS-free protective textiles) and CIOSH 2026 Shanghai (A+A Global portfolio) as the year's anchor events. On financials, Levi's beat Q1 2026 expectations and Engelbert Strauss opened its first US bricks-and-mortar store — both signal continued positioning of workwear brands as crossover lifestyle plays, which tightens the technical-vs-fashion sourcing divergence.",
+      flag: "",
+      links: [
+        { title: "Health & Safety International — Global textile innovators showcase next-gen PPE at Techtextil 2026", url: "https://www.healthandsafetyinternational.com/article/1955684/global-textile-innovators-showcase-next-generation-high-performance-ppe-techtextil-2026-frankfurt", source: "healthandsafetyinternational.com", svgId: "shows-4" },
+        { title: "Textile World — Where Performance Becomes Product Strategy: Techtextil 2026", url: "https://www.textileworld.com/textile-world/2026/03/where-performance-becomes-product-strategy-techtextil-frankfurt-2026-puts-functional-apparel-in-the-spotlight/", source: "textileworld.com", svgId: "shows-2" },
+        { title: "A+A 2025 — World-leading trade fair for safety, security and health at work (recap)", url: "https://www.aplusa-online.com/en/Media_News/Press/Press_material/Press_Releases_News/A_A_2025_the_world-leading_trade_fair_for_safety,_security_and_health_at_work_%E2%80%93_experiencing_innovations,_sharing_knowledge,_shaping_the_future!", source: "aplusa-online.com", svgId: "shows-5" },
+        { title: "Levi's Q1 2026 earnings top expectations", url: "https://wwd.com/business-news/financial/levi-q1-2026-earnings-harmit-1238892316/", source: "wwd.com", svgId: "shows-1" },
+        { title: "Sourcing Journal — Germany's Engelbert Strauss workwear brand expands to the US", url: "https://sourcingjournal.com/denim/denim-brands/englebert-strauss-levi-strauss-united-states-california-store-workwear-denim-462983/", source: "sourcingjournal.com", svgId: "shows-3" }
+      ]
+    },
+    {
+      id: "design",
+      title: "Design, Ergonomics & Comfort",
+      subtitle: "Construction, articulation, performance fibres",
+      lede: "Techtextil 2026 crystallised the next wave of workwear construction: Nilit's new fabric collection combining thermal and moisture management, odour control and abrasion resistance into athletic-grade fibres; Lenzing's protection portfolio in cellulosic platforms; the broader Frankfurt show featuring around 1,700 exhibitors and an explicit defence-and-PFAS-free protective textiles track. The throughline is that next-cycle workwear RFQs will demand sportswear-grade construction inside compliance silhouettes — pattern engineering, finishing capability and certified mill chemistry are the differentiators.",
+      flag: "",
+      links: [
+        { title: "Innovation in Textiles — Nilit and partners at Techtextil 2026", url: "https://innovationintextiles.com/nilit-and-partners-at-techtextil-2026/", source: "innovationintextiles.com", svgId: "des-3" },
+        { title: "Innovation in Textiles — Lenzing protection at Techtextil 2026", url: "https://innovationintextiles.com/exhibitions-conferences/lenzing-protection-at-techtextil-2026/", source: "innovationintextiles.com", svgId: "des-5" },
+        { title: "Health & Safety International — Techtextil 2026 to showcase PFAS-free protective textiles and defence innovations", url: "https://www.healthandsafetyinternational.com/article/1952893/techtextil-2026-showcase-pfas-free-protective-textiles-defence-innovations", source: "healthandsafetyinternational.com", svgId: "des-2" },
+        { title: "Innovation in Textiles — Performance apparel on the catwalk", url: "https://innovationintextiles.com/performance-apparel-on-the-catwalk/", source: "innovationintextiles.com", svgId: "des-1" },
+        { title: "FashionUnited — Techtextil & Techprocess 2026: navigating innovation pressure", url: "https://fashionunited.com/news/fairs/techtextil-and-techprocess-2026-navigating-innovation-and-the-pressure-to-implement/2026042972050", source: "fashionunited.com", svgId: "des-4" }
+      ]
+    },
+    {
+      id: "launches",
+      title: "New Launches & Collections",
+      subtitle: "Brand drops in workwear and adjacent",
+      lede: "This week's named launches lean lifestyle rather than technical: GAS's Spring/Summer 2026 collection foregrounds a Workwear thematic alongside Sport Heritage and Racing; Coach's SS26 ready-to-wear repurposes denim and workwear materials into wide-leg trousers and fitted jackets; Engelbert Strauss has formalised US retail expansion via a California store and an earlier Stuntmen's Association collab. No new compliance-led PPE collection was reported in the safety trade press this week; the action sits in the fabric layer (see Design and Fabric sections).",
+      flag: "",
+      links: [
+        { title: "FashionUnited — GAS Spring/Summer 2026 collection: denim core with Workwear thematic", url: "https://fashionunited.com/news/fashion/gas-presents-the-spring-summer-2026-collection-denim-at-the-core-with-a-forward-moving-spirit/2025060466401", source: "fashionunited.com", svgId: "lau-4" },
+        { title: "WWD — Top 10 Men's Collections of Spring 2026 (workwear repurposing)", url: "https://wwd.com/menswear-news/mens-fashion/lists/top-10-mens-collections-spring-2026-photos-1237987131/", source: "wwd.com", svgId: "lau-1" },
+        { title: "FashionUnited — Engelbert Strauss x Hollywood Stuntmen's Association collaboration", url: "https://fashionunited.com/news/fashion/engelbert-strauss-collaborates-with-hollywoods-stuntmens-association/2024040959320", source: "fashionunited.com", svgId: "lau-3" },
+        { title: "FashionUnited — Spring/Summer 2026 fashion trends (workwear edit)", url: "https://fashionunited.com/specials/spring-summer-2026-fashion-trends", source: "fashionunited.com", svgId: "lau-5" },
+        { title: "Sourcing Journal — NYFW Spring/Summer 2026 Denim Report", url: "https://sourcingjournal.com/denim/denim-trends/new-york-fashion-week-spring-summer-2026-denim-report-nyfw-1234778367/", source: "sourcingjournal.com", svgId: "lau-2" }
+      ]
+    }
+  ]
+};
+
+const REFRESH_TASK_ID = "eu-workwear-dashboard-refresh";
+
+function escapeHtml(s) {
+  return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+    return ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c];
+  });
+}
+function fmtDate(iso, opts) { try { return new Date(iso).toLocaleString("en-GB", opts || { day: "2-digit", month: "long", year: "numeric" }); } catch (e) { return iso; } }
+function fmtDateTime(iso) { try { return new Date(iso).toLocaleString("en-GB", { day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" }); } catch (e) { return iso; } }
+function isoWeek(d) {
+  const date = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+  date.setUTCDate(date.getUTCDate() + 4 - (date.getUTCDay() || 7));
+  const yearStart = new Date(Date.UTC(date.getUTCFullYear(), 0, 1));
+  return Math.ceil((((date - yearStart) / 86400000) + 1) / 7);
+}
+function nextMondayString() {
+  const d = new Date();
+  const day = d.getDay();
+  const daysUntilMon = ((1 + 7 - day) % 7) || 7;
+  const next = new Date(d);
+  next.setDate(d.getDate() + daysUntilMon);
+  next.setHours(8, 0, 0, 0);
+  return next.toLocaleString("en-GB", { weekday: "long", day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit" });
+}
+
+const VISIBLE_KEY = "buikaelements-dashboard:visible-v3";
+function getVisible() { try { const raw = JSON.parse(localStorage.getItem(VISIBLE_KEY) || "null"); if (Array.isArray(raw)) return raw; } catch (e) {} return SNAPSHOT.categories.map(function (c) { return c.id; }); }
+function setVisible(ids) { try { localStorage.setItem(VISIBLE_KEY, JSON.stringify(ids)); } catch (e) {} }
+
+function illustrationSvg(svgId) {
+  return '<svg class="photo" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice"><use href="#' + escapeHtml(svgId) + '"/></svg>';
+}
+
+function renderMasthead() {
+  const d = new Date(SNAPSHOT.refreshedAt);
+  document.getElementById("issue-num").textContent = isoWeek(d);
+  document.getElementById("issue-date").textContent = fmtDate(SNAPSHOT.refreshedAt, { weekday: "long", day: "2-digit", month: "long", year: "numeric" });
+  document.getElementById("snapshot-stamp").textContent = "Snapshot " + fmtDateTime(SNAPSHOT.refreshedAt);
+  document.getElementById("next-refresh").textContent = "Next auto-refresh: " + nextMondayString();
+}
+
+function renderAlerts() {
+  const flagged = SNAPSHOT.categories.filter(function (c) { return c.flag && c.flag.trim().length > 0; });
+  if (flagged.length === 0) { document.getElementById("alerts").style.display = "none"; return; }
+  document.getElementById("alerts").style.display = "flex";
+  document.getElementById("alerts-list").innerHTML = flagged.map(function (c) {
+    const txt = c.flag.replace(/^Action Flag:\s*/i, "");
+    return '<li><strong>' + escapeHtml(c.title) + ':</strong> ' + escapeHtml(txt) + '</li>';
+  }).join("");
+}
+
+function renderLead() {
+  const f = SNAPSHOT.featured;
+  const heroSvgId = f.svgId || (f.sectionId + "-1");
+  document.getElementById("lead").innerHTML =
+    '<div>' +
+      '<svg class="hero" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice"><use href="#' + escapeHtml(heroSvgId) + '"/></svg>' +
+      '<div class="caption">Editorial illustration · ' + escapeHtml(f.sectionLabel) + '</div>' +
+    '</div>' +
+    '<div>' +
+      '<div class="section-kicker">' + escapeHtml(f.sectionLabel) + '</div>' +
+      '<h2>' + escapeHtml(f.headline) + '</h2>' +
+      '<p class="deck">' + escapeHtml(f.deck) + '</p>' +
+      '<div class="byline">Sources: ' + escapeHtml(f.sourceLabel) + '</div>' +
+      '<div class="body">' + f.body.map(function (p) { return '<p>' + escapeHtml(p) + '</p>'; }).join("") + '</div>' +
+    '</div>';
+}
+
+function renderFilters() {
+  const visible = getVisible();
+  const el = document.getElementById("filter-chips");
+  el.innerHTML = SNAPSHOT.categories.map(function (c) {
+    const active = visible.indexOf(c.id) !== -1;
+    return '<span class="chip ' + (active ? "active" : "") + '" data-cat="' + c.id + '">' + escapeHtml(c.title) + '</span>';
+  }).join("");
+  el.querySelectorAll(".chip").forEach(function (chip) {
+    chip.addEventListener("click", function () {
+      chip.classList.toggle("active");
+      const newVisible = Array.from(el.querySelectorAll(".chip.active")).map(function (c) { return c.getAttribute("data-cat"); });
+      setVisible(newVisible);
+      applyFilter();
+    });
+  });
+}
+function applyFilter() {
+  const visible = getVisible();
+  document.querySelectorAll("section.section").forEach(function (el) {
+    el.style.display = visible.indexOf(el.getAttribute("data-cat")) !== -1 ? "" : "none";
+  });
+}
+
+function renderSections() {
+  document.getElementById("sections").innerHTML = SNAPSHOT.categories.map(function (c) {
+    const flagHtml = c.flag
+      ? '<div class="flag-callout"><span class="flag-tag">Action</span>' + escapeHtml(c.flag.replace(/^Action Flag:\s*/i, "")) + '</div>'
+      : '';
+    const storiesHtml = c.links.map(function (l) {
+      const svgId = l.svgId || (c.id + "-1");
+      return (
+        '<a class="story" href="' + escapeHtml(l.url) + '" target="_blank" rel="noopener">' +
+          illustrationSvg(svgId) +
+          '<div class="body">' +
+            '<div class="source">' + escapeHtml(l.source || "") + '</div>' +
+            '<div class="headline">' + escapeHtml(l.title) + '</div>' +
+            '<div class="read-more">Read article →</div>' +
+          '</div>' +
+        '</a>'
+      );
+    }).join("");
+    return (
+      '<section class="section" data-cat="' + c.id + '">' +
+        '<div class="section-head">' +
+          '<h3>' + escapeHtml(c.title) + '</h3>' +
+          '<span class="sub">' + escapeHtml(c.subtitle) + '</span>' +
+        '</div>' +
+        '<p class="lede">' + escapeHtml(c.lede) + '</p>' +
+        flagHtml +
+        '<div class="stories">' + storiesHtml + '</div>' +
+      '</section>'
+    );
+  }).join("");
+  applyFilter();
+}
+
+function setStatus(state, text) {
+  document.getElementById("status-dot").className = "dot " + (state || "");
+  document.getElementById("status-text").textContent = text;
+}
+function toast(msg) {
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  setTimeout(function () { t.classList.remove("show"); }, 4500);
+}
+
+async function triggerRefresh() {
+  const btn = document.getElementById("refresh-btn");
+  btn.disabled = true;
+  setStatus("busy", "Refresh queued…");
+  try {
+    if (!window.cowork || typeof window.cowork.runScheduledTask !== "function") {
+      throw new Error("Refresh API not available.");
+    }
+    await window.cowork.runScheduledTask(REFRESH_TASK_ID);
+    toast("Refresh started — close and reopen this page in ~2 minutes for new data.");
+    setStatus("busy", "Refresh running");
+  } catch (err) {
+    toast("Could not start refresh: " + (err && err.message ? err.message : String(err)));
+    setStatus("", "Refresh failed");
+  } finally {
+    setTimeout(function () { btn.disabled = false; }, 6000);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  renderMasthead();
+  renderAlerts();
+  renderLead();
+  renderFilters();
+  renderSections();
+  setStatus("", "Snapshot " + fmtDateTime(SNAPSHOT.refreshedAt));
+  document.getElementById("refresh-btn").addEventListener("click", triggerRefresh);
+});
+</script>
+</body>
+</html>
